@@ -13,6 +13,11 @@ client = OpenAI(api_key=api_key)
 class QuizAnswers(BaseModel):
     answers: list[str]
 
+
+@app.get("/")
+def health_check():
+    return {"status": "API çalışıyor"}
+    
 @app.post("/recommend-car")
 async def recommend_car(data: QuizAnswers):
     try:
@@ -52,3 +57,4 @@ async def recommend_car(data: QuizAnswers):
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
