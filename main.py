@@ -16,7 +16,7 @@ class QuizAnswers(BaseModel):
 
 @app.get("/")
 def health_check():
-    return {"status": "API çalışıyor"}
+    return {"status": "API"}
     
 @app.post("/recommend-car")
 async def recommend_car(data: QuizAnswers):
@@ -32,7 +32,7 @@ async def recommend_car(data: QuizAnswers):
         }
         """
 
-        prompt = f"Kullanıcı cevapları: {user_answers_text}"
+        prompt = f"Cevaplar: {user_answers_text}"
 
         response = client.chat.completions.create(
             model="gpt-4o-mini",
@@ -50,11 +50,12 @@ async def recommend_car(data: QuizAnswers):
         print("HATA:", e)
         return {
             "car": "Toyota Corolla",
-            "comment": "AI ",
-            "image": "https://upload.wikimedia.org/wikipedia/commons/5/5e/2019_Toyota_Corolla.jpg"
+            "comment": "AI çalışmadı ",
+            "image": "https://www.sixt.com.tr/storage/cache/3efbc805ae81badb5b348158fd337faed4ab35f5.webp"
         }
 
 if __name__ == "__main__":
     port = int(os.environ.get("PORT", 8000))
     uvicorn.run(app, host="0.0.0.0", port=port)
+
 
